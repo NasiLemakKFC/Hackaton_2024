@@ -1,0 +1,40 @@
+name: hackaton_project
+description: "A new Flutter project."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  google_fonts: ^6.2.1
+
+  curved_navigation_bar: ^1.0.6
+  firebase_auth: ^5.3.1
+  cloud_firestore: ^5.4.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+
+flutter:
+
+  assets:
+    - asset/image/background.jpg
+    - asset/image/mission.png
+    - asset/image/ranking.png
+    - asset/image/event.png
+
+  uses-material-design: true
+
