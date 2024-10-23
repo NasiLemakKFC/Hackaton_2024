@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "160822437260",
-    "project_id": "hackaton-2024-543bb",
-    "storage_bucket": "hackaton-2024-543bb.appspot.com"
+    "project_number": "782747653822",
+    "project_id": "first-hackaton-21f7a",
+    "storage_bucket": "first-hackaton-21f7a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:160822437260:android:2e0c2429cee378bf1422a9",
+        "mobilesdk_app_id": "1:782747653822:android:d7b9ea353f65fcac3170ef",
         "android_client_info": {
           "package_name": "com.mirol.hackaton_project"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBJGsSkSYpVs0pnlxzEjarj-IeMaZbpsyE"
+          "current_key": "AIzaSyCBnH2T1gRteulpz0Mpg1RGhVFfXetAr38"
         }
       ],
       "services": {
