@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hackaton_project/Page/homepage.dart';
 import 'package:hackaton_project/mainpage.dart';
 
 class SetUserInfo extends StatefulWidget {
@@ -16,6 +15,31 @@ class _SetUserInfoState extends State<SetUserInfo> {
   final _userAge = TextEditingController();
   final _phoneNumber = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+Future<void> uploadMissionToNewUser(String userId, List<Map<String, dynamic>> missions) async {
+  try {
+    for (var mission in missions) {
+      await FirebaseFirestore.instance.collection("MissionUser").add({
+        "MissionID": mission[""],
+        "Percentage": mission["Percentage"],
+        "UserID": userId,
+      });
+    }
+  } catch (e) {
+    print(e);
+  }
+}
+
+  Future<List<Map<String, dynamic>>> getMissionData() async {
+  try {
+    final querySnapshot = await FirebaseFirestore.instance.collection("Mission").get();
+    final missionData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    return missionData;
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}
 
   // Method to register user information into Firestore
   Future<void> _registerUserInfo() async {
@@ -37,7 +61,14 @@ class _SetUserInfoState extends State<SetUserInfo> {
         'Age': _userAge.text.trim(),
         'Phone Number': _phoneNumber.text.trim(),
         'email': FirebaseAuth.instance.currentUser!.email,
+        'points': "0.00",
       });
+      final userId = data.id;
+      //get mission data
+      final missionData = await getMissionData();
+      // Add the mission data to the new user
+      await uploadMissionToNewUser(userId,missionData);
+
       print(data.id);
 
       // Navigate to Mainpage after successful registration

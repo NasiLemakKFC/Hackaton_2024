@@ -22,7 +22,7 @@ Widget build(BuildContext context) {
           child: getselectedwidget(index: dex),
         ),
         bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
           index: dex,
           animationDuration: Duration(milliseconds: 300),
           color: Colors.blue.shade200,
