@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:hackaton_project/Page/chat.dart';
+import 'package:hackaton_project/Page/chatlist.dart';
 import 'package:hackaton_project/Page/homepage.dart';
 import 'package:hackaton_project/Page/profile.dart';
 

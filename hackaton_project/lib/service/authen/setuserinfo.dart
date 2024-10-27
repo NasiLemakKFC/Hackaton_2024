@@ -20,7 +20,7 @@ Future<void> uploadMissionToNewUser(String userId, List<Map<String, dynamic>> mi
   try {
     for (var mission in missions) {
       await FirebaseFirestore.instance.collection("MissionUser").add({
-        "MissionID": mission[""],
+        "MissionID": mission["MissionID"],
         "Percentage": mission["Percentage"],
         "UserID": userId,
       });

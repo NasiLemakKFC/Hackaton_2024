@@ -36,7 +36,6 @@ Widget build(BuildContext context) {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: Column(
         children: [
-          searchBox(),
           Expanded(
             child: FutureBuilder(
               future: FirebaseFirestore.instance.collection('MissionUser').get(),
@@ -166,27 +165,4 @@ Widget build(BuildContext context) {
     ),
   );
 }
-
-  Widget searchBox() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: TextField(
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(0),
-          prefixIcon: Icon(Icons.search, color: Colors.grey, size: 20),
-          prefixIconConstraints: BoxConstraints(
-            maxHeight: 20,
-            maxWidth: 25,
-          ),
-          hintText: "Search",
-          hintStyle: GoogleFonts.poppins(color: Colors.grey, fontSize: 15),
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
 }

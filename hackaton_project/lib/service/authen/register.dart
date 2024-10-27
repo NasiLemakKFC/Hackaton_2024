@@ -1,18 +1,19 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hackaton_project/authen/register.dart';
+import 'package:flutter/material.dart';
+import 'package:hackaton_project/service/authen/setuserinfo.dart';
 
-/// This widget provides a login form for users to sign in with their email and password.
-/// The user can also navigate to the sign-up page if they don't have an account.
-
-class LoginUserPage extends StatefulWidget {
-  const LoginUserPage({super.key});
+/// This widget provides a sign-up form for users to register with an email and password.
+/// It checks if the email already exists in the Firestore 'users' collection before creating a new user.
+/// Upon successful registration, the user is navigated to the SetUserInfo page.
+class LoginRegister extends StatefulWidget {
+  const LoginRegister({super.key});
 
   @override
-  State<LoginUserPage> createState() => _LoginUserPageState();
+  State<LoginRegister> createState() => _LoginRegisterState();
 }
 
-class _LoginUserPageState extends State<LoginUserPage> {
+class _LoginRegisterState extends State<LoginRegister> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -24,15 +25,40 @@ class _LoginUserPageState extends State<LoginUserPage> {
     super.dispose();
   }
 
-  Future<void> loginUser() async {
+  Future<void> _registerUser() async {
     try {
-      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      // Check if the email already exists
+      final userQuerySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: emailController.text.trim())
+          .get();
+
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        // Email already exists, show an error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Email already exists')),
+        );
+        return;
+      }
+
+      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
       print(userCredential.user?.uid);
+
+      // Navigate to SetUserInfo
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SetUserInfo(),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       print(e.message);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message ?? 'An error occurred')),
+      );
     }
   }
 
@@ -40,7 +66,7 @@ class _LoginUserPageState extends State<LoginUserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Log in'),
+        title: Text('Sign Up'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -67,18 +93,7 @@ class _LoginUserPageState extends State<LoginUserPage> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
-                  await loginUser();
-                },
-                child: Text('Login'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginRegister(),
-                    ),
-                  );
+                  await _registerUser();
                 },
                 child: Text('Sign Up'),
               ),
@@ -89,3 +104,4 @@ class _LoginUserPageState extends State<LoginUserPage> {
     );
   }
 }
+
