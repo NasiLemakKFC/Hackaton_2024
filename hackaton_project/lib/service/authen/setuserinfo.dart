@@ -43,47 +43,47 @@ Future<void> uploadMissionToNewUser(String userId, List<Map<String, dynamic>> mi
 
   // Method to register user information into Firestore
   Future<void> _registerUserInfo() async {
-    try {
-      // Check if all fields are filled
-      if (_nickName.text.trim().isEmpty ||
-          _userAge.text.trim().isEmpty ||
-          _phoneNumber.text.trim().isEmpty) {
-        // Show an error message and return
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please fill in all fields')),
-        );
-        return;
-      }
-
-      // Add user info to 'User' collection in Firestore
-      final data = await FirebaseFirestore.instance.collection('User').add({
-        'Nickname': _nickName.text.trim(),
-        'Age': _userAge.text.trim(),
-        'Phone Number': _phoneNumber.text.trim(),
-        'email': FirebaseAuth.instance.currentUser!.email,
-        'points': "0.00",
-      });
-      final userId = data.id;
-      //get mission data
-      final missionData = await getMissionData();
-      // Add the mission data to the new user
-      await uploadMissionToNewUser(userId,missionData);
-
-      print(data.id);
-
-      // Navigate to Mainpage after successful registration
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Mainpage(),
-        ),
-      );
-    } catch (e) {
-      print(e);
+  try {
+    // Check if all fields are filled
+    if (_nickName.text.trim().isEmpty ||
+        _userAge.text.trim().isEmpty ||
+        _phoneNumber.text.trim().isEmpty) {
+      // Show an error message and return
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        const SnackBar(content: Text('Please fill in all fields')),
       );
+      return;
     }
+
+    // Add user info to 'User' collection in Firestore
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance.collection('User').doc(userId).set({
+      'Nickname': _nickName.text.trim(),
+      'Age': _userAge.text.trim(),
+      'Phone Number': _phoneNumber.text.trim(),
+      'email': FirebaseAuth.instance.currentUser!.email,
+      'points': "0.00",
+      'uid': userId,
+    });
+
+    //get mission data
+    final missionData = await getMissionData();
+    // Add the mission data to the new user
+    await uploadMissionToNewUser(userId,missionData);
+
+    // Navigate to Mainpage after successful registration
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Mainpage(),
+      ),
+    );
+  } catch (e) {
+    print(e);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(e.toString())),
+    );
+  }
   }
 
   @override

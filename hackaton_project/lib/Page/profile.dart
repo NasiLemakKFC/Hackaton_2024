@@ -38,6 +38,7 @@ class _ProfileState extends State<Profile> {
         onChanged: (value) {
           newValue = value;
         },
+        keyboardType: field == 'Phone Number' ? TextInputType.phone : TextInputType.text,
       ),
       actions: [
         TextButton(
@@ -66,6 +67,9 @@ Widget build(BuildContext context) {
     child: Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: _signOut, icon: const Icon(Icons.logout, color: Colors.white,)),
+        ],
         backgroundColor: const Color.fromARGB(255, 1, 45, 81),
         title: Text('Profile Page', style: GoogleFonts.poppins(color: Colors.white)),
         centerTitle: true,

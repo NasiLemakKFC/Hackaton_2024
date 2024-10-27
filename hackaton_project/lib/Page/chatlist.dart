@@ -42,6 +42,7 @@ class GroupChatState extends State<GroupChat> {
   }
   Widget _buildUserListItem(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
+    print(data);
     if (FirebaseAuth.instance.currentUser!.email != data['email']) {
       return ListTile(
         title: Text(data['Nickname']),
