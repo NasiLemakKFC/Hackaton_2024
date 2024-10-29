@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hackaton_project/Page/missionpage.dart';
+import 'package:hackaton_project/Page/ranking.dart';
+
+// 
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -48,7 +51,7 @@ class HomePageState extends State<HomePage> {
                   children: [
                     SizedBox(height: 80),
                     Text(
-                      "Your Earning",
+                      "Your Points",
                       overflow: TextOverflow.clip,
                       style: GoogleFonts.poppins(
                         color: Colors.white,
@@ -57,11 +60,19 @@ class HomePageState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                    'RM ${userDoc.get('points')}',
+                    '${userDoc.get('points')} points',
                       style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 60,
                       decoration: TextDecoration.none,
+                      ),
+                    ),
+                    Text(
+                      "Wallet: RM0.00",
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 20,
+                        decoration: TextDecoration.none,
                       ),
                     ),
                     SizedBox(height: 30),
@@ -98,12 +109,12 @@ class HomePageState extends State<HomePage> {
                                   icon: SizedBox(
                                     width: 60,
                                     height: 60,
-                                    child: Image.asset('asset/image/mission.png'),
+                                    child: Image.asset('asset/image/calculator.png'),
                                   ),
                                   color: Colors.black,
                                 ),
                                 Text(
-                                  'Mission',
+                                  'Calculator',
                                   style: GoogleFonts.poppins(
                                     color: Colors.black,
                                     fontSize: 15,
@@ -114,7 +125,12 @@ class HomePageState extends State<HomePage> {
                             Column(
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(context,
+                                     MaterialPageRoute(builder: (context) => const RankingPage(),
+                                     ),
+                                     );
+                                  },
                                   icon: SizedBox(
                                     width: 60,
                                     height: 60,
@@ -150,6 +166,7 @@ class HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ],
+
                             ),
                           ],
                         ),

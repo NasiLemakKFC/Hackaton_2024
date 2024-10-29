@@ -40,7 +40,8 @@ class _LoginUserPageState extends State<LoginUserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Log in'),
+        backgroundColor: Colors.transparent,
+        title: Text('Welcome!'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
